@@ -1,21 +1,17 @@
 import express from 'express'
 import cors from 'cors'
 import 'dotenv/config'
-import {connectDB} from './config/db.js';
-import userRouter from './routes/userRoute.js';
-import taskRouter from './routes/taskRoute.js';
+import { connectDB } from './config/db.js'
+import userRouter from './routes/userRoute.js'
+import taskRouter from './routes/taskRoute.js'
 
 const app = express();
 const port = process.env.PORT || 4000;
 
 // MIDDLEWARE
-app.use(cors({
-  origin: 'http://localhost:5173', // Your frontend origin
-  credentials: true // If you're using cookies/sessions
-}));
-
+app.use(cors()); // allow all origins
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
 // DB CONNECTION
 connectDB();
@@ -25,9 +21,9 @@ app.use("/api/user", userRouter);
 app.use("/api/tasks", taskRouter);
 
 app.get('/', (req, res) => {
-    res.send('API WORKING');
-})
+  res.send('API WORKING');
+});
 
-app.listen(port, ()=>{
-    console.log(`Server Started on http://localhost:${port}`)
-})
+app.listen(port, () => {
+  console.log(`Server Started on http://localhost:${port}`);
+});
